@@ -1,3 +1,4 @@
+#stremio.nix
 {
   lib,
   rustPlatform,
@@ -20,10 +21,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
     owner = "Stremio";
     repo = "stremio-linux-shell";
     rev = "v$(version)";
-    hash = lib.fakeHash;
+    hash = "sha256-ZvXqbXgwxlKvTwdQ2ARbtvLOBRChgRpE21fcuffAUHw=";
   };
 
-  cargoHash = lib.fakeHash;
+  cargoHash = "sha256-z8JgqVbvXN1lwUEW2jw8fozxUNL7ObbAA9zD/BF9M/s=";
 
   meta = {
     description = "Freedom to stream";
