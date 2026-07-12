@@ -20,11 +20,13 @@ rustPlatform.buildRustPackage (finalAttrs: {
   src = fetchFromGitHub {
     owner = "Stremio";
     repo = "stremio-linux-shell";
-    rev = "v$(version)";
-    hash = "sha256-ZvXqbXgwxlKvTwdQ2ARbtvLOBRChgRpE21fcuffAUHw=";
+    rev = "v1.1.2";
+    hash = "sha256-jo+9KDX/a46jPTmYhiFNgp5fDKhoAsML/+m7u3ituEQ=";
   };
 
-  cargoHash = "sha256-z8JgqVbvXN1lwUEW2jw8fozxUNL7ObbAA9zD/BF9M/s=";
+  cargoHash = "sha256-hZ9neZD+aB7bth4UTsWJXIKGSbo/c3wZRtfOIp7LvwY=";
+
+  impureCacheDir = "$(builtins.getEnv 'HOME')/.cache/rust";
 
   meta = {
     description = "Freedom to stream";
@@ -48,4 +50,17 @@ rustPlatform.buildRustPackage (finalAttrs: {
     mpv
     libepoxy
   ];
+
+  postPatch = ''
+    patch -p1 < ${./build.rs.patch};
+    grep -q "use std::path::PathBuf" build.rs || sed -i '1i use std::path::PathBuf;' build.rs
+  '';
+
+  preBuild = ''
+    echo "OUT_DIR:"
+    echo $OUT_DIR
+    echo ""
+    echo "CARGO_TARGET_DIR"
+    echo $CARGO_TARGET_DIR
+  '';
 })

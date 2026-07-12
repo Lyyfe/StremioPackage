@@ -8,6 +8,5 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     cargo
     rustc
-    nix-prefetch-github
   ];
 }
